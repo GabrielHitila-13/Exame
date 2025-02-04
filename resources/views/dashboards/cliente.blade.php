@@ -2,7 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h2>Minhas Viaturas</h2>
-    <p>Aqui você pode consultar o estado das suas viaturas.</p>
+    <h1>Área do Cliente</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ route('veiculos.consultar') }}" class="btn btn-primary btn-block">Consultar Estado da Viatura</a>
+        </div>
+    </div>
 </div>
 @endsection

@@ -74,33 +74,60 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="logo.png" alt="Logo" height="30" class="d-inline-block align-top">
             Gestão de Oficinas
         </a>
+
+        <!-- Botão de Toggle para Mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Menu de Navegação -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('veiculos.index') }}">Veículos</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Serviços
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Agendamentos</a></li>
-                        <li><a class="dropdown-item" href="#">Histórico</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Usuários</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pagamentos</a>
-                </li>
+                @auth
+                    <!-- Links Comuns -->
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('veiculos.index') }}">Veículos</a></li>
+
+                    <!-- Links Dinâmicos por Permissão -->
+                    @if(Auth::user()->role == 'admin')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Gerenciar Usuários</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('servicos.index') }}">Gerenciar Serviços</a></li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Serviços</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Agendamentos</a></li>
+                            <li><a class="dropdown-item" href="#">Histórico</a></li>
+                        </ul>
+                    </li>
+                    @endif
+
+                    @if(Auth::user()->role == 'secretario')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('pagamentos.index') }}">Pagamentos</a></li>
+                    @endif
+
+                    @if(Auth::user()->role == 'tecnico')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('tecnico.viaturas') }}">Meus Veículos</a></li>
+                    @endif
+
+                    @if(Auth::user()->role == 'cliente')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('veiculos.consultar') }}">Consultar Estado</a></li>
+                    @endif
+
+                    <!-- Botão de Logout -->
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                        </form>
+                    </li>
+                @else
+                    <!-- Usuários não autenticados -->
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                @endauth
             </ul>
         </div>
     </div>
@@ -111,6 +138,7 @@
         @yield('content')
     </div>
 </main>
+
 
 <!-- Bootstrap 5 JS + Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

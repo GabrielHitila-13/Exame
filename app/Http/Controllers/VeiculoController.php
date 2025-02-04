@@ -114,6 +114,30 @@ class VeiculoController extends Controller
      */
     public function alterarEstado(Request $request, Veiculo $veiculo)
     {
+        //Validar entrada do usuário
+        $request->validate([
+        'estado' => 'required|string|max:255',
+        'codigo_validacao' => 'required|string',
+        'password' => 'required|string',
+        'novo_estado' => 'required|string'
+    ]);
+
+    // Verificar se o código de validação é correto
+    if ($veiculo->codigo_validacao !== $request->codigo_validacao) {
+        return back()->with('error', 'Código de validação incorreto.');
+    }
+
+    // Verificar senha do usuário autenticado
+    if (!Hash::check($request->password, auth()->user()->password)) {
+        return back()->with('error', 'Senha incorreta.');
+    }
+
+    // Atualizar o estado da viatura
+    $veiculo->estado = $request->novo_estado;
+    $veiculo->save();
+
+    return back()->with('success', 'Estado da viatura atualizado com sucesso.');
+    
         $request->validate([
             'estado' => 'required|string|max:255',
         ]);

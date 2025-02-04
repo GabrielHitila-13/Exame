@@ -56,4 +56,29 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Nível de acesso atualizado com sucesso!');
     }
+
+    /**
+     * Exibe o formulário de cancelamento de conta.
+     */
+    public function showCancelForm()
+    {
+        return view('cliente.cancelar-conta');
+    }
+
+    public function cancelarConta(Request $request)
+    {
+        $user = Auth::user();
+
+        // Opcional: Salvar registro do cancelamento para auditoria
+        \Log::info("Conta cancelada: " . $user->email);
+
+        // Excluir o usuário
+        $user->delete();
+
+        // Logout e redirecionamento
+        Auth::logout();
+
+        return redirect('/')->with('success', 'Sua conta foi cancelada com sucesso.');
+    }
+    
 }

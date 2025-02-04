@@ -11,6 +11,8 @@
 </form>
 
                 <div class="card-header">{{ __('Seja bem vindo : Dashboard') }}</div>
+                <a href="{{ route('register') }}" class="btn btn-primary">Criar Conta</a>
+
 
                 <div class="card-body">
                     @if (session('status'))

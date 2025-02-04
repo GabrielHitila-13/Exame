@@ -2,7 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h2>Painel do Técnico</h2>
-    <p>Aqui você pode visualizar as viaturas atribuídas e atualizar o estado delas.</p>
+    <h1>Painel do Técnico</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ route('tecnico.viaturas') }}" class="btn btn-primary btn-block">Minhas Viaturas</a>
+        </div>
+    </div>
 </div>
 @endsection

@@ -13,5 +13,6 @@
         <input type="number" name="preco" required step="0.01">
 
         <button type="submit">Salvar</button>
+        <button class="nav-item"><a class="nav-link" href="{{ route('servicos.index') }}">Voltar</a></button>
     </form>
 @endsection

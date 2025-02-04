@@ -15,11 +15,17 @@ return new class extends Migration {
             $table->enum('role', ['admin', 'secretario', 'tecnico', 'cliente'])->default('cliente');
             $table->rememberToken();
             $table->timestamps();
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('documento_identificacao')->nullable()->after('password');
+            });
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('documento_identificacao');
+        });
     }
 };

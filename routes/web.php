@@ -71,3 +71,34 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tecnico/dashboard', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard')->middleware('role:tecnico');
     Route::get('/meus-veiculos', [DashboardController::class, 'cliente'])->name('cliente.dashboard')->middleware('role:cliente');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/veiculos/{veiculo}/alterar-estado', [VeiculoController::class, 'alterarEstado'])
+        ->name('veiculos.alterarEstado');
+});
+
+
+// Rotas de para eliminar conta do utilizador
+// use App\Http\Controllers\UserController;
+Route::middleware(['auth', 'role:cliente'])->group(function () {
+    Route::get('/cancelar-conta', [UserController::class, 'showCancelForm'])->name('cliente.cancelarConta');
+    Route::delete('/cancelar-conta', [UserController::class, 'cancelarConta'])->name('cliente.cancelarConta.post');
+});
+
+
+use App\Http\Controllers\PortalController;
+Route::get('/', [PortalController::class, 'index'])->name('portal.index');
+
+
+
+// Rota para exibir a página principal dos relatórios
+Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+
+// Rota para exibir o relatório do número de viaturas
+Route::get('/relatorios/numero-viaturas', [RelatorioController::class, 'numeroViaturas'])->name('relatorios.numero_viaturas');
+
+// Rota para exibir o relatório de viaturas concluídas
+Route::get('/relatorios/concluidas', [RelatorioController::class, 'viaturasConcluidas'])->name('relatorios.viaturas_concluidas');
+
+// Rota para exibir o relatório de viaturas pendentes
+Route::get('/relatorios/pendentes', [RelatorioController::class, 'viaturasPendentes'])->name('relatorios.viaturas_pendentes');

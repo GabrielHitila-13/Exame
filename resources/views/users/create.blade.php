@@ -24,5 +24,6 @@
         </select>
 
         <button type="submit">Salvar</button>
+        <button class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Voltar</a></button>
     </form>
 @endsection
