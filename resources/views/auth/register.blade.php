@@ -6,24 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-                
-                <div class="row mb-3">
-    <label for="documento_identificacao" class="col-md-4 col-form-label text-md-end">Documento de Identificação</label>
-
-    <div class="col-md-6">
-        <input id="documento_identificacao" type="file" class="form-control @error('documento_identificacao') is-invalid @enderror" name="documento_identificacao" required>
-
-        @error('documento_identificacao')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -47,6 +32,21 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Campo "Documento de Identificação" inserido aqui -->
+                        <div class="row mb-3">
+                            <label for="documento_identificacao" class="col-md-4 col-form-label text-md-end">Documento de Identificação</label>
+
+                            <div class="col-md-6">
+                                <input id="documento_identificacao" type="file" class="form-control @error('documento_identificacao') is-invalid @enderror" name="documento_identificacao" required>
+
+                                @error('documento_identificacao')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

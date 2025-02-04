@@ -96,6 +96,8 @@
                     @if(Auth::user()->role == 'admin')
                         <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Gerenciar Usuários</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('servicos.index') }}">Gerenciar Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('servicos.index') }}">Criar Contas</a></li>
+
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Serviços</a>
                         <ul class="dropdown-menu">

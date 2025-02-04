@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('portal.index');
 });
 
 use App\Http\Controllers\VeiculoController;

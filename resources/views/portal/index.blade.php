@@ -17,7 +17,7 @@
     <p>Temos parceria com diversas seguradoras e fabricantes de peças.</p>
 
     <h2>Localização</h2>
-    <p>Rua Principal, Bairro Centro, Cidade - País</p>
+    <p>Rua 4 de Abril, Bairro Centro, Lubango - Huitla</p>
 
     <h2>Área Administrativa</h2>
     <a href="{{ route('login') }}" class="btn btn-primary">Acessar o Sistema</a>

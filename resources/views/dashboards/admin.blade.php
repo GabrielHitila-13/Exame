@@ -4,10 +4,8 @@
 <div class="container">
     <h2>Painel do Administrador</h2>
     <p>Bem-vindo, Admin! Aqui você pode gerenciar todo o sistema.</p>
-    @extends('layouts.app')
 
 
-    <h1>Painel do Administrador</h1>
     <div class="row">
         <div class="col-md-4">
             <a href="{{ route('users.index') }}" class="btn btn-primary btn-block">Gerenciar Usuários</a>
