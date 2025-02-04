@@ -17,9 +17,10 @@ return new class extends Migration
         $table->string('modelo');
         $table->string('cor');
         $table->string('tipo');
-        $table->string('estado');
+        $table->string('estado')->default('Em análise');
         $table->string('tipo_avaria');
         $table->string('codigo_validacao')->unique();
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         $table->timestamps();
     });
 }

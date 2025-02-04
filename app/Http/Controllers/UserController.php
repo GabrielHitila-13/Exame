@@ -43,4 +43,17 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
     }
+    /**
+     * Atualiza o nível de acesso do usuário (somente para administrador).
+     */
+    public function updateRole(Request $request, User $user)
+    {
+        $request->validate([
+            'role' => 'required|in:admin,secretario,tecnico,cliente',
+        ]);
+
+        $user->update(['role' => $request->role]);
+
+        return redirect()->back()->with('success', 'Nível de acesso atualizado com sucesso!');
+    }
 }

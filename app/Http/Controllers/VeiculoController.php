@@ -7,26 +7,37 @@ use Illuminate\Http\Request;
 
 class VeiculoController extends Controller
 {
+        /**
+     * Exibe todas as viaturas registradas (apenas para secretário e administrador).
+     */
     public function index()
     {
         $veiculos = Veiculo::all();
         return view('veiculos.index', compact('veiculos'));
     }
 
+    /**
+     * Exibe o formulário de cadastro de uma nova viatura (somente para secretário).
+     */
     public function create()
     {
         return view('veiculos.create');
     }
 
+
+    /**
+     * Armazena uma nova viatura no banco de dados.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'marca' => 'required',
-            'modelo' => 'required',
-            'cor' => 'required',
-            'tipo' => 'required',
-            'estado' => 'required',
-            'tipo_avaria' => 'required',
+            'marca' => 'required|string|max:255',
+            'modelo' => 'required|string|max:255',
+            'cor' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'estado' => 'required|string|max:255',
+            'tipo_avaria' => 'required|string|max:255',
+            'codigo_validacao' => 'required|unique:veiculos|string|max:10',
         ]);
 
         $veiculo = new Veiculo($request->all());
@@ -36,11 +47,17 @@ class VeiculoController extends Controller
         return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
     }
 
+    /**
+     * Exibe detalhes de uma viatura específica.
+     */
     public function show(Veiculo $veiculo)
     {
         return view('veiculos.show', compact('veiculo'));
     }
 
+    /**
+     * Exibe formulário de edição de uma viatura (somente para secretário).
+     */
     public function edit(Veiculo $veiculo)
     {
         return view('veiculos.edit', compact('veiculo'));
@@ -67,4 +84,56 @@ class VeiculoController extends Controller
         $veiculo->delete();
         return redirect()->route('veiculos.index')->with('success', 'Veículo excluído com sucesso!');
     }
+
+    public function veiculos()
+{
+    // Funcionalidade para o secretário registrar e ver viaturas
+}
+
+/**
+     * Gera um relatório de todas as viaturas (somente para secretário e administrador).
+     */
+    public function relatorios()
+    {
+        $veiculos = Veiculo::all();
+        return view('veiculos.relatorios', compact('veiculos'));
+    }
+
+/**
+     * Exibe as viaturas atribuídas ao técnico.
+     */
+    public function tecnico()
+    {
+        $veiculos = Veiculo::where('estado', 'Em manutenção')->get();
+        return view('veiculos.tecnico', compact('veiculos'));
+    }
+
+
+/**
+     * Permite ao técnico alterar o estado da viatura após diagnóstico e solução.
+     */
+    public function alterarEstado(Request $request, Veiculo $veiculo)
+    {
+        $request->validate([
+            'estado' => 'required|string|max:255',
+        ]);
+
+        $veiculo->update(['estado' => $request->estado]);
+
+        return redirect()->route('veiculos.tecnico')->with('success', 'Estado da viatura atualizado com sucesso!');
+    }
+
+/**
+     * Permite ao cliente consultar o estado da sua viatura.
+     */
+    public function consultarEstado()
+{
+    // Pega o usuário autenticado
+    $user = auth()->user();
+
+    // Obtém apenas os veículos do cliente autenticado
+    $veiculos = Veiculo::where('user_id', $user->id)->get();
+
+    return view('veiculos.consultar', compact('veiculos'));
+}
 }
