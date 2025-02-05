@@ -77,7 +77,10 @@ class RegisterController extends Controller
         'password' => Hash::make($data['password']),
         'documento_identificacao' => $documentoPath,
     ]);
-
+    $request->validate([
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6|confirmed',
+    ]);
         
     }
 }

@@ -3,29 +3,47 @@
 @section('title', 'Editar Veículo')
 
 @section('content')
-    <h1>Editar Veículo</h1>
-    <form action="{{ route('veiculos.update', $veiculo) }}" method="POST">
-        @csrf
-        @method('PUT')
-        
-        <label>Marca:</label>
-        <input type="text" name="marca" value="{{ $veiculo->marca }}" required>
+    <div class="container mt-4">
+        <h1>Editar Veículo</h1>
+        <form action="{{ route('veiculos.update', $veiculo) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <label>Modelo:</label>
-        <input type="text" name="modelo" value="{{ $veiculo->modelo }}" required>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca:</label>
+                <input type="text" name="marca" id="marca" class="form-control" value="{{ $veiculo->marca }}" required>
+            </div>
 
-        <label>Cor:</label>
-        <input type="text" name="cor" value="{{ $veiculo->cor }}" required>
+            <div class="mb-3">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" name="modelo" id="modelo" class="form-control" value="{{ $veiculo->modelo }}" required>
+            </div>
 
-        <label>Tipo:</label>
-        <input type="text" name="tipo" value="{{ $veiculo->tipo }}" required>
+            <div class="mb-3">
+                <label for="cor" class="form-label">Cor:</label>
+                <input type="text" name="cor" id="cor" class="form-control" value="{{ $veiculo->cor }}" required>
+            </div>
 
-        <label>Estado:</label>
-        <input type="text" name="estado" value="{{ $veiculo->estado }}" required>
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo:</label>
+                <input type="text" name="tipo" id="tipo" class="form-control" value="{{ $veiculo->tipo }}" required>
+            </div>
 
-        <label>Tipo de Avaria:</label>
-        <input type="text" name="tipo_avaria" value="{{ $veiculo->tipo_avaria }}" required>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado:</label>
+                <select name="estado" id="estado" class="form-control">
+                    <option value="Em andamento" @if($veiculo->estado == 'Em andamento') selected @endif>Em andamento</option>
+                    <option value="Concluída" @if($veiculo->estado == 'Concluída') selected @endif>Concluída</option>
+                    <!-- Adicione outras opções conforme necessário -->
+                </select>
+            </div>
 
-        <button type="submit">Atualizar</button>
-    </form>
+            <div class="mb-3">
+                <label for="tipo_avaria" class="form-label">Tipo de Avaria:</label>
+                <input type="text" name="tipo_avaria" id="tipo_avaria" class="form-control" value="{{ $veiculo->tipo_avaria }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+        </form>
+    </div>
 @endsection

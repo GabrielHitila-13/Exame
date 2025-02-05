@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Veiculo;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +13,9 @@ class DashboardController extends Controller
 
     public function secretario()
     {
-        return view('dashboards.secretario');
+        $veiculo = Veiculo::find(1); // Substitua 1 pelo ID apropriado ou outra lógica de seleção
+
+        return view('dashboards.secretario', compact('veiculo'));
     }
 
     public function tecnico()

@@ -1,29 +1,30 @@
 <?php
+
+namespace App\Http\Controllers;
+
 use App\Models\Veiculo;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RelatorioController extends Controller
 {
     public function index()
     {
-        return view('relatorios.index');
+        // Contagem geral
+        $totalVeiculos = Veiculo::count();
+        $veiculosConcluidos = Veiculo::where('estado', 'Concluído')->count();
+        $veiculosPendentes = Veiculo::where('estado', '!=', 'Concluído')->count();
+        
+        // Obter todos os veículos
+        $veiculos = Veiculo::all();
+
+        // Passando todas as variáveis para a view
+        return view('relatorios.index', compact('totalVeiculos', 'veiculosConcluidos', 'veiculosPendentes', 'veiculos'));
     }
 
-    public function numeroViaturas()
+    public function gerarRelatorio()
     {
-        $total = Veiculo::count();
-        return view('relatorios.numero_viaturas', compact('total'));
-    }
-
-    public function viaturasConcluidas()
-    {
-        $concluidas = Veiculo::where('estado', 'Concluído')->count();
-        return view('relatorios.viaturas_concluidas', compact('concluidas'));
-    }
-
-    public function viaturasPendentes()
-    {
-        $pendentes = Veiculo::where('estado', '!=', 'Concluído')->count();
-        return view('relatorios.viaturas_pendentes', compact('pendentes'));
+        $veiculos = Veiculo::all();
+        return view('relatorios.index', compact('veiculos'));
     }
 }

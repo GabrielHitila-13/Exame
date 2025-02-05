@@ -3,7 +3,7 @@
 @section('title', 'Cadastrar Veículo')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         <h1>Cadastrar Veículo</h1>
         <form action="{{ route('veiculos.store') }}" method="POST">
             @csrf

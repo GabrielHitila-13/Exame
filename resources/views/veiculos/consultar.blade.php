@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-4">
     <h2>Minhas Viaturas</h2>
 
     @if ($veiculos->isEmpty())
         <p>Você não tem nenhuma viatura registrada.</p>
     @else
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Marca</th>

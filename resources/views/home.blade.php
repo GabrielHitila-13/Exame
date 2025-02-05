@@ -5,14 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-            <form action="{{ route('logout') }}" method="POST">
-    @csrf
-    <button type="submit" class="btn btn-danger">Sair</button>
-</form>
-
-                <div class="card-header">{{ __('Seja bem vindo : Dashboard') }}</div>
-                <a href="{{ route('register') }}" class="btn btn-primary">Criar Conta</a>
-
+                <div class="card-header">{{ __('Seja bem-vindo : Dashboard') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -21,7 +14,16 @@
                         </div>
                     @endif
 
-                    {{ __('Estas logado!') }}
+                    {{ __('Você está logado!') }}
+
+                    <div class="mt-3">
+                        <a href="{{ route('register') }}" class="btn btn-primary">Criar Conta</a>
+                    </div>
+
+                    <form action="{{ route('logout') }}" method="POST" class="mt-3">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Sair</button>
+                    </form>
                 </div>
             </div>
         </div>

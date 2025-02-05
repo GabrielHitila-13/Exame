@@ -2,7 +2,38 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2>Alterar Estado da Viatura</h2>
+    <h1>Detalhes do Veículo</h1>
+    <div class="card shadow-sm p-4 mt-3">
+        <div class="mb-3">
+            <p><strong>Marca:</strong> {{ $veiculo->marca }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Modelo:</strong> {{ $veiculo->modelo }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Cor:</strong> {{ $veiculo->cor }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Tipo:</strong> {{ $veiculo->tipo }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Estado:</strong> {{ $veiculo->estado }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Tipo de Avaria:</strong> {{ $veiculo->tipo_avaria }}</p>
+        </div>
+        <div class="mb-3">
+            <p><strong>Código de Validação:</strong> {{ $veiculo->codigo_validacao }}</p>
+        </div>
+        <a href="{{ route('veiculos.index') }}" class="btn btn-secondary mt-3">Voltar</a>
+    </div>
+
+    @if (session('qrCodePath'))
+    <h3>Código QR do Veículo Concluído</h3>
+    <img src="{{ session('qrCodePath') }}" alt="QR Code" />
+    @endif
+
+    <h2 class="mt-5">Alterar Estado da Viatura</h2>
 
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
@@ -40,7 +71,7 @@
     @if ($veiculo->estado !== 'Concluído')
         <form action="{{ route('veiculos.concluir', $veiculo->id) }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-success">Concluir Veículo</button>
+            <button type="submit" class="btn btn-success mt-3">Concluir Veículo</button>
         </form>
     @else
         <p>O veículo já foi concluído.</p>
