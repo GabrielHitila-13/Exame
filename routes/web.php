@@ -120,3 +120,4 @@ Route::middleware(['auth', 'role:tecnico'])->group(function () {
 
 Route::get('/viaturas-tecnico', [VeiculoController::class, 'tecnico'])->name('veiculos.tecnico');
 Route::post('/veiculos/{id}/alterar_estado', [VeiculoController::class, 'alterarEstado'])->name('veiculos.alterar_estado');
+Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
