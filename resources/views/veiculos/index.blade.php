@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-4">
         <h1>Lista de Veículos</h1>
-        <a href="{{ route('veiculos.create') }}" class="btn" style="background-color:rgba(19, 34, 65, 0.71); color: white;">Adicionar Veículo</a>
+        <a href="{{ route('veiculos.create') }}" class="btn" style="background-color:rgba(19, 34, 65, 0.71); color: white;">Registrar Veículo</a>
 
         <table class="table table-striped table-bordered mt-3">
             <thead>

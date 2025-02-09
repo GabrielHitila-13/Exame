@@ -68,11 +68,32 @@ class PagamentoController extends Controller
     }
 
 /**
-     * Permite que o cliente solicite um orçamento.
-     */
+    * Permite que o cliente solicite um orçamento.
+    */
     public function solicitarOrcamento(Request $request)
     {
-        // Implementação do orçamento (ainda a definir)
+       $request->validate([
+          'veiculo_id' => 'required|exists:veiculos,id',
+          'servico_id' => 'required|exists:servicos,id',
+       ]);
+
+       $veiculo = Veiculo::findOrFail($request->veiculo_id);
+       $servico = Servico::findOrFail($request->servico_id);
+
+       // Obtendo os valores fixos do sistema
+       $taxaParque = config('precos.taxa_parque');
+       $seguroParque = config('precos.seguro_parque');
+       $percentualServico = config('precos.percentual_servico');
+
+       // Calculando o valor total do orçamento
+       $valorOrcamento = $servico->preco + $taxaParque + $seguroParque + ($servico->preco * $percentualServico);
+
+       // Retornar o orçamento ao cliente
+       return response()->json([
+          'veiculo_id' => $veiculo->id,
+          'servico_id' => $servico->id,
+          'valor_orcamento' => $valorOrcamento,
+       ]);
     }
 
 /**

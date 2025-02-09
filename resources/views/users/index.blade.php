@@ -33,6 +33,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ ucfirst($user->role) }}</td>
                             <td>
+                                <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">Editar</a>
                                 <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')

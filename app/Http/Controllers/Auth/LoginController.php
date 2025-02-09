@@ -46,7 +46,7 @@ class LoginController extends Controller
     } elseif ($user->role == 'secretario') {
         return redirect()->route('secretario.dashboard');
     } elseif ($user->role == 'tecnico') {
-        return redirect()->route('tecnico.dashboard');
+        return redirect()->route('tecnico.index');
     } elseif ($user->role == 'cliente') {
         return redirect()->route('cliente.dashboard');
     }

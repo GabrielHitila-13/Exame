@@ -22,7 +22,16 @@
             <a href="{{ route('cliente.cancelarConta') }}" class="btn btn-primary btn-block">Gerenciar Contas</a>
         </div>
         <div class="col-md-3 mb-3">
-            <a href="{{ route('veiculos.consultar') }}" class="btn btn-warning btn-block">Consultar Veículos</a>
+            <a href="{{ route('veiculos.index') }}" class="btn btn-primary btn-block">Gerenciar Veículos</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{{ route('veiculos.consultar') }}" class="btn btn-primary btn-block">Estado do Veículo</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{{ route('servicos.index') }}" class="btn btn-primary btn-block">Taxas de Pagamento</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{{ route('relatorios.index') }}" class="btn btn-warning btn-block">Relatórios</a>
         </div>
     </div>
 </div>

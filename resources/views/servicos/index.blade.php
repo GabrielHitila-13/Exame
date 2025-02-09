@@ -7,7 +7,7 @@
         <h1 class="mb-4">Serviços Disponíveis</h1>
 
         <div class="mb-3">
-            <a href="{{ route('servicos.create') }}" class="btn btn-dark">Adicionar Serviço</a>
+            <a href="{{ route('servicos.create') }}" class="btn btn-dark">Registrar Serviço</a>
             <a href="{{ route('register') }}" class="btn btn-primary">Criar Conta</a>
         </div>
         <li class="nav-item dropdown">

@@ -101,11 +101,11 @@
                     @endif
 
                     @if(Auth::user()->role == 'tecnico')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('tecnico.viaturas') }}">Meus Veículos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('dashboards.tecnico') }}">Dashboards</a></li>
                     @endif
 
                     @if(Auth::user()->role == 'cliente')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('veiculos.consultar') }}">Consultar Estado</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('cliente.dashboard') }}">Recursos</a></li>
                     @endif
 
                     <li class="nav-item">

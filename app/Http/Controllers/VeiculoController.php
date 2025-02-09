@@ -52,10 +52,17 @@ class VeiculoController extends Controller
     /**
      * Exibe detalhes de uma viatura específica.
      */
-    public function show(Veiculo $veiculo)
-    {
-        return view('veiculos.detalhes', compact('veiculo'));
+    public function show($id)
+{
+    $veiculo = Veiculo::find($id);
+
+    if (!$veiculo) {
+        return redirect()->route('veiculos.index')->with('error', 'Veículo não encontrado!');
     }
+
+    return view('veiculos.detalhes', compact('veiculo'));
+}
+
 
     /**
      * Exibe formulário de edição de uma viatura (somente para secretário).
@@ -106,31 +113,32 @@ class VeiculoController extends Controller
      * Permite ao técnico alterar o estado da viatura após diagnóstico e solução.
      */
     public function alterarEstado(Request $request, $id)
-    {
-        $request->validate([
-            'estado' => 'required|string|max:255',
-            'codigo_validacao' => 'required|string',
-            'password' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'estado' => 'required|string|max:255',
+        'codigo_validacao' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-        $veiculo = Veiculo::findOrFail($id);
+    $veiculo = Veiculo::findOrFail($id);
 
-        // Verificar código de validação
-        if ($veiculo->codigo_validacao !== $request->codigo_validacao) {
-            return back()->with('error', 'Código de validação incorreto.');
-        }
-
-        // Verificar senha do usuário autenticado
-        if (!Hash::check($request->password, auth()->user()->password)) {
-            return back()->with('error', 'Senha incorreta.');
-        }
-
-        // Atualizar o estado da viatura
-        $veiculo->estado = $request->estado;
-        $veiculo->save();
-
-        return redirect()->route('tecnico.index')->with('success', 'Estado do veículo alterado com sucesso!');
+    // Verificar código de validação
+    if ($veiculo->codigo_validacao !== $request->codigo_validacao) {
+        return back()->with('error', 'Código de validação incorreto.');
     }
+
+    // Verificar senha do usuário autenticado
+    if (!Hash::check($request->password, auth()->user()->password)) {
+        return back()->with('error', 'Senha incorreta.');
+    }
+
+    // Atualizar o estado da viatura
+    $veiculo->estado = $request->estado;
+    $veiculo->save();
+
+    return redirect()->route('veiculos.show', $veiculo->id)->with('success', 'Estado do veículo alterado com sucesso!');
+}
+
 
     /**
      * Permite ao cliente consultar o estado da sua viatura.

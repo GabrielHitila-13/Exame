@@ -43,8 +43,8 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('veiculos.alterar_estado', $veiculo->id) }}" method="POST">
-        @csrf
+    <form action="{{ route('veiculos.alterarEstado', $veiculo->id) }}" method="POST">
+    @csrf
         <div class="mb-3">
             <label for="codigo_validacao" class="form-label">Código de Validação</label>
             <input type="text" class="form-control" name="codigo_validacao" required>
