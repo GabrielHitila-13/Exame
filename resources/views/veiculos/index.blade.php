@@ -11,6 +11,7 @@
             <thead>
                 <tr>
                     <th>Marca</th>
+                    <th>Criado por</th>
                     <th>Modelo</th>
                     <th>Cor</th>
                     <th>Tipo</th>
@@ -22,7 +23,7 @@
                 @foreach ($veiculos as $veiculo)
                     <tr>
                         <td>{{ $veiculo->marca }}</td>
-                        <td>{{ $veiculo->modelo }}</td>
+                        <td>{{ $veiculo->user ? $veiculo->user->name : 'Não atribuído' }}</td> <!-- Exibe o nome do dono -->                        <td>{{ $veiculo->modelo }}</td>
                         <td>{{ $veiculo->cor }}</td>
                         <td>{{ $veiculo->tipo }}</td>
                         <td>{{ $veiculo->estado }}</td>

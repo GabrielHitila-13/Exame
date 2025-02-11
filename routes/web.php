@@ -38,6 +38,7 @@ Route::post('/veiculos/{id}/concluir', [VeiculoController::class, 'concluirVeicu
 Route::get('/veiculos', [VeiculoController::class, 'index'])->name('veiculos.index'); // Listar veículos
 Route::get('/veiculos.consultar', [VeiculoController::class, 'consultarestado'])->name('veiculos.consultar'); // Listar veículos
 
+Route::post('/veiculos', [VeiculoController::class, 'store'])->name('veiculos.store');
 
 // Rotas para o controlador ServicoController
 use App\Http\Controllers\ServicoController;
@@ -48,17 +49,28 @@ use App\Http\Controllers\UserController;
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::resource('users', UserController::class)->except(['edit', 'update', 'show']);
+        Route::get('/veiculos/index', [VeiculoController::class, 'index'])->name('veiculos.show'); // Listar veículos
+        Route::get('/cancelar-conta', [UserController::class, 'showCancelForm'])->name('cliente.cancelarConta'); // Mostrar formulário de cancelamento de conta
+        Route::get('/veiculos/create', [VeiculoController::class, 'create'])->name('veiculos.create')->middleware('auth');
+
     });
     // Rotas para editar User
     Route::get('/users/{user}/editar', [UserController::class, 'edit'])->name('users.edit'); // Editar usuário
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update'); // Atualizar usuário
 });
 
-// Rotas para o controlador PagamentoController e VeiculoController com middleware de autenticação e papel de secretário
+// Rotas para o controlador PagamentoController e VeiculoController com middleware de autenticação e papel de secretário IMPORTANT
 use App\Http\Controllers\PagamentoController;
 Route::middleware(['auth', 'secretario'])->group(function () {
     Route::post('taxas', [PagamentoController::class, 'store'])->name('taxas.store'); // Registrar taxas de pagamento
     Route::get('relatorios', [VeiculoController::class, 'relatorios'])->name('relatorios.index'); // Gerar relatórios
+    Route::get('veiculos.index', [VeiculoController::class, 'index'])->name('veiculos.index'); // Gerar relatórios
+    Route::get('veiculos/{veiculo}', [VeiculoController::class, 'consultarEstado'])->name('veiculos.consultar'); // Gerar relatórios
+    //Route::resource('veiculos/create', [VeiculoController::class, 'create'])->name('veiculos.create');;
+    Route::get('/veiculos/create', [VeiculoController::class, 'create'])->name('veiculos.create')->middleware('auth'); // Exibir formulário de cadastro de veículo
+    Route::post('/veiculos', [VeiculoController::class, 'store'])->name('veiculos.store')->middleware('auth');// Cadastrar veículo IP com autenticacao
+
+
 });
 
 // Rotas para o controlador VeiculoController com middleware de autenticação e papel de técnico

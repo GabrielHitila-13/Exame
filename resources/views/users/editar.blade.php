@@ -63,7 +63,7 @@
                 <!-- Botões -->
                 <div class="text-center">
                     <button type="submit" class="btn btn-success">Atualizar</button>
-                    <a href="{{ route('servicos.index') }}" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="{{ route('users.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

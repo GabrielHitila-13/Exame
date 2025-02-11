@@ -11,7 +11,12 @@ class ViaturaPolicy
      */
     public function create(User $user)
     {
-        return $user->role === 'secretario';
+        return $user->role === ['secretario', 'admin'];
+    }
+    
+    public function store(User $user)
+    {
+        return $user->role === ['secretario', 'admin'];
     }
 
     /**

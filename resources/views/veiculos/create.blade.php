@@ -7,19 +7,15 @@
         <h1>Cadastrar Veículo</h1>
         <form action="{{ route('veiculos.store') }}" method="POST">
             @csrf
-
             <!-- Campo Marca -->
             <div class="row mb-3">
                 <label for="marca" class="col-md-4 col-form-label text-md-end">Marca:</label>
                 <div class="col-md-6">
-                    <input id="marca" type="text" class="form-control @error('marca') is-invalid @enderror" name="marca" value="{{ old('marca') }}" required>
-
-                    @error('marca')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                <input id="marca" type="text" class="form-control @error('marca') is-invalid @enderror"
+                    name="marca" value="{{ old('marca') }}" required>
+                 @error('marca')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
-                </div>
             </div>
 
             <!-- Campo Modelo -->
@@ -91,11 +87,27 @@
                     @enderror
                 </div>
             </div>
+            <!-- Campo User ID -->
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
+            <!-- Associar ao Usuario -->
+            <div class="row mb-3">
+    <label for="user_id" class="col-md-4 col-form-label text-md-end">Criado por:</label>
+    <div class="col-md-6">
+        <select id="user_id" name="user_id" class="form-control">
+            @foreach ($usuarios as $usuario)
+                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+
 
             <!-- Botões -->
             <div class="row mb-0">
                 <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
                     <a class="btn btn-secondary" href="{{ route('veiculos.index') }}">Voltar</a>
                 </div>
             </div>

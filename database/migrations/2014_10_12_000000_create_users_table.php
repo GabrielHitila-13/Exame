@@ -16,9 +16,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
 
-            Schema::table('users', function (Blueprint $table) {
-                $table->string('documento_identificacao')->nullable()->after('password');
-            });
+            
         });
     }
 

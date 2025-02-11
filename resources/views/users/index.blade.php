@@ -34,6 +34,7 @@
                             <td>{{ ucfirst($user->role) }}</td>
                             <td>
                                 <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{{ route('veiculos.consultar', $user) }}" class="btn btn-warning btn-sm">Ver veiculos</a>
                                 <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')

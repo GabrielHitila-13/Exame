@@ -7,6 +7,8 @@ use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Veiculo;
+use App\Models\User;
+
 
 class VeiculoController extends Controller
 {
@@ -15,7 +17,7 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        $veiculos = Veiculo::all();
+        $veiculos = Veiculo::with('user')->get(); // Carrega os veículos com os donos
         return view('veiculos.index', compact('veiculos'));
     }
 
@@ -24,34 +26,42 @@ class VeiculoController extends Controller
      */
     public function create()
     {
-        return view('veiculos.create');
+        $usuarios = User::all(); // Pegando todos os usuários para exibir na seleção
+        return view('veiculos.create', compact('usuarios'));
     }
 
     /**
      * Armazena uma nova viatura no banco de dados.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'marca' => 'required|string|max:255',
-            'modelo' => 'required|string|max:255',
-            'cor' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'estado' => 'required|string|max:255',
-            'tipo_avaria' => 'required|string|max:255',
-            'codigo_validacao' => 'required|unique:veiculos|string|max:10',
-        ]);
+{
+    $request->validate([
+        'marca' => 'required|string|max:255',
+        'modelo' => 'required|string|max:255',
+        'cor' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+        'estado' => 'required|string|max:255',
+        'tipo_avaria' => 'required|string|max:255',
+        'user_id' => 'required|exists:users,id', // Certifica que o user_id existe
+    ]);
 
-        $veiculo = new Veiculo($request->all());
-        $veiculo->codigo_validacao = strtoupper(uniqid());
-        $veiculo->save();
+    // Criando o veículo com os dados do request
+    Veiculo::create([
+        'marca' => $request->marca,
+        'modelo' => $request->modelo,
+        'cor' => $request->cor,
+        'tipo' => $request->tipo,
+        'estado' => $request->estado,
+        'tipo_avaria' => $request->tipo_avaria,
+        'user_id' => $request->user_id, // Salva corretamente o user_id vindo do formulário
+        'codigo_validacao' => strtoupper(uniqid()), // Gerando um código único
+    ]);
+    //dd($request->all()); // Verifica os dados recebidos antes de salvar
 
-        return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
-    }
 
-    /**
-     * Exibe detalhes de uma viatura específica.
-     */
+    return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
+}
+
     public function show($id)
 {
     $veiculo = Veiculo::find($id);

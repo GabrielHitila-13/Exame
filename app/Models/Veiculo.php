@@ -18,17 +18,17 @@ class Veiculo extends Model
         'tipo',
         'estado',
         'tipo_avaria',
+        'user_id', // Certifique-se de que esta linha existe
         'codigo_validacao',
-        'user_id'
     ];
+    
 
     /**
      * Relacionamento: um veículo pertence a um usuário (cliente).
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
+        return $this->belongsTo(User::class, 'user_id');    }
 
     protected $casts = [
         'created_at' => 'datetime',
@@ -42,6 +42,8 @@ class Veiculo extends Model
 
         static::creating(function ($veiculo) {
             $veiculo->codigo_validacao = strtoupper(Str::random(10)); // Gera um código aleatório de 10 caracteres
+            $veiculo->user_id = auth()->id();
         });
     }
+    
 }

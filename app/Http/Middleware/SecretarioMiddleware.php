@@ -15,4 +15,15 @@ class SecretarioMiddleware
 
         return redirect('/')->with('error', 'Acesso negado!');
     }
+
+    public function create()
+{
+    if (!in_array(auth()->user()->role, ['secretario', 'admin'])) {
+        abort(403, 'Acesso negado');
+    }
+
+    $users = User::all();
+    return view('veiculos.create', compact('users'));
+}
+
 }
